@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D22AE77418B3D4B300F2B4B5 /* gobble.wav in Resources */ = {isa = PBXBuildFile; fileRef = D22AE77318B3D4B300F2B4B5 /* gobble.wav */; };
+		D22AE77618B3D53C00F2B4B5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D22AE77518B3D53C00F2B4B5 /* AudioToolbox.framework */; };
 		D25C280518B349B200C3AD39 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D25C280418B349B200C3AD39 /* Foundation.framework */; };
 		D25C280718B349B200C3AD39 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D25C280618B349B200C3AD39 /* CoreGraphics.framework */; };
 		D25C280918B349B200C3AD39 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D25C280818B349B200C3AD39 /* UIKit.framework */; };
@@ -36,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D22AE77318B3D4B300F2B4B5 /* gobble.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gobble.wav; sourceTree = "<group>"; };
+		D22AE77518B3D53C00F2B4B5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		D25C280118B349B200C3AD39 /* SkiMonster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SkiMonster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D25C280418B349B200C3AD39 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D25C280618B349B200C3AD39 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -65,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D22AE77618B3D53C00F2B4B5 /* AudioToolbox.framework in Frameworks */,
 				D25C283A18B34A0800C3AD39 /* SpriteKit.framework in Frameworks */,
 				D25C280718B349B200C3AD39 /* CoreGraphics.framework in Frameworks */,
 				D25C280918B349B200C3AD39 /* UIKit.framework in Frameworks */,
@@ -107,6 +112,7 @@
 		D25C280318B349B200C3AD39 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D22AE77518B3D53C00F2B4B5 /* AudioToolbox.framework */,
 				D25C283918B34A0800C3AD39 /* SpriteKit.framework */,
 				D25C280418B349B200C3AD39 /* Foundation.framework */,
 				D25C280618B349B200C3AD39 /* CoreGraphics.framework */,
@@ -126,6 +132,7 @@
 				D25C281A18B349B200C3AD39 /* ViewController.m */,
 				D25C283B18B34A3600C3AD39 /* SkiMonsterScene.h */,
 				D25C283C18B34A3600C3AD39 /* SkiMonsterScene.m */,
+				D22AE77318B3D4B300F2B4B5 /* gobble.wav */,
 				D25C281C18B349B200C3AD39 /* Images.xcassets */,
 				D25C280B18B349B200C3AD39 /* Supporting Files */,
 			);
@@ -208,6 +215,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Steven Stevenson";
 				TargetAttributes = {
+					D25C280018B349B200C3AD39 = {
+						DevelopmentTeam = 2S283D3328;
+					};
 					D25C282118B349B300C3AD39 = {
 						TestTargetID = D25C280018B349B200C3AD39;
 					};
@@ -238,6 +248,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D25C281D18B349B200C3AD39 /* Images.xcassets in Resources */,
+				D22AE77418B3D4B300F2B4B5 /* gobble.wav in Resources */,
 				D25C280F18B349B200C3AD39 /* InfoPlist.strings in Resources */,
 				D25C281818B349B200C3AD39 /* Main.storyboard in Resources */,
 			);
@@ -388,6 +399,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SkiMonster/SkiMonster-Prefix.pch";
 				INFOPLIST_FILE = "SkiMonster/SkiMonster-Info.plist";
@@ -401,6 +413,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SkiMonster/SkiMonster-Prefix.pch";
 				INFOPLIST_FILE = "SkiMonster/SkiMonster-Info.plist";
@@ -470,6 +483,7 @@
 				D25C283518B349B300C3AD39 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D25C283618B349B300C3AD39 /* Build configuration list for PBXNativeTarget "SkiMonsterTests" */ = {
 			isa = XCConfigurationList;
@@ -478,6 +492,7 @@
 				D25C283818B349B300C3AD39 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

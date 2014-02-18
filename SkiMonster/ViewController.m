@@ -23,6 +23,7 @@
     
     SKScene *scene = [SkiMonsterScene sceneWithSize:skyMonsterView.bounds.size];
     scene.backgroundColor = [UIColor whiteColor];
+    scene.scaleMode = SKSceneScaleModeAspectFit;
     
     [skyMonsterView presentScene:scene];
 }
