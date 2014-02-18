@@ -22,6 +22,7 @@
     skyMonsterView.showsNodeCount = YES;
     
     SKScene *scene = [SkiMonsterScene sceneWithSize:skyMonsterView.bounds.size];
+    scene.backgroundColor = [UIColor whiteColor];
     
     [skyMonsterView presentScene:scene];
 }
