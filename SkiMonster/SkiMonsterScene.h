@@ -13,7 +13,8 @@ typedef enum objectMaskCategories
 {
     COLLISION_CATEGORY_OBSTACLE     = 0x1 << 0,
     COLLISION_CATEGORY_FOOD         = 0x1 << 1,
-    COLLISION_CATEGORY_MONSTER      = 0x1 << 2
+    COLLISION_CATEGORY_MONSTER      = 0x1 << 2,
+    COLLISION_CATEGORY_SPECIAL      = 0x1 << 3
 } CollisionMaskCategories;
 
 @interface SkiMonsterScene : SKScene

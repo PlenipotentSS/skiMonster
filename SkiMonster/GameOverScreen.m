@@ -47,6 +47,14 @@
     highScoreLabel.position = CGPointMake(self.size.width/2, self.size.height-100);
     [self addChild:highScoreLabel];
     
+    if (self.highScore == self.numSkiersEaten) {
+        SKAction *zoomOut = [SKAction scaleBy:1.5f duration:.4f];
+        SKAction *zoomIn = [SKAction scaleBy:.75f duration:.4f];
+        SKAction *zoom = [SKAction sequence:@[zoomOut,zoomIn]];
+        
+        [highScoreLabel runAction:zoom];
+    }
+    
     SKLabelNode* numberSkiersLabel = [SKLabelNode labelNodeWithFontNamed:@"Courier"];
     numberSkiersLabel.fontSize = 80;
     numberSkiersLabel.fontColor = [SKColor whiteColor];

@@ -18,17 +18,24 @@
 
 @interface SkiMonsterScene() <SKPhysicsContactDelegate>
 
+//obstacles
 @property (nonatomic) int nextObstacle;
 @property (nonatomic) double nextObstacleSpawn;
+@property (nonatomic) NSMutableArray *obstacleArray;
 
+
+//food
 @property (nonatomic) int nextFood;
 @property (nonatomic) double nextFoodSpawn;
-
-@property (nonatomic) SKSpriteNode *monster;
-@property (nonatomic) NSMutableArray *obstacleArray;
 @property (nonatomic) NSMutableArray *foodArray;
 
-@property (nonatomic) NSTimer *monsterMove;
+//specials
+@property (nonatomic) int nextSpecial;
+@property (nonatomic) double nextSpecialSpawn;
+@property (nonatomic) NSMutableArray *specialArray;
+
+//main character
+@property (nonatomic) SKSpriteNode *monster;
 
 @property (nonatomic) BOOL playingSound;
 
@@ -55,8 +62,10 @@
 #define kNumTrees 30
 #define kNumPoles 4
 #define kNumFood 10
+#define kNumSpecials 5
 #define SpeedIncrease .001
 #define MonsterYLevel CGRectGetHeight(self.frame)-150
+#define MonsterXLevel 160
 
 @end
 
@@ -67,7 +76,6 @@
 {
     self = [super initWithSize:size];
     if (self) {
-        self.monsterMove = [[NSTimer alloc] init];
         self.speedMultiplier = 1.f;
         self.tappedXOrigin = -1.f;
         
@@ -78,6 +86,7 @@
         
         [self bringMonsterToScene];
         [self addNPCs];
+        [self addSpecials];
         
         self.loseLabel = [[SKLabelNode alloc] initWithFontNamed:@"HelveticaNueue"];
         self.loseLabel.fontSize = 50;
@@ -132,7 +141,7 @@
     self.numOfFoodEaten = 0;
     self.lives = 1;
     self.monster = [SKSpriteNode spriteNodeWithImageNamed:@"abom_h"];
-    self.monster.position = CGPointMake(150, MonsterYLevel);
+    self.monster.position = CGPointMake(MonsterXLevel, MonsterYLevel);
     
     CGSize monsterSize = self.monster.size;
     monsterSize = CGSizeMake(monsterSize.width*.4, monsterSize.width*.4);
@@ -141,9 +150,29 @@
     self.monster.physicsBody.allowsRotation = NO;
     self.monster.physicsBody.affectedByGravity = NO;
     self.monster.physicsBody.categoryBitMask = COLLISION_CATEGORY_MONSTER;
-    self.monster.physicsBody.contactTestBitMask = COLLISION_CATEGORY_FOOD | COLLISION_CATEGORY_OBSTACLE;
+    self.monster.physicsBody.contactTestBitMask = COLLISION_CATEGORY_FOOD | COLLISION_CATEGORY_OBSTACLE | COLLISION_CATEGORY_SPECIAL;
+    self.monster.zPosition = 5;
     self.monster.name = @"Monster";
     [self addChild:self.monster];
+}
+
+-(void) addSpecials
+{
+    self.nextSpecial = 0;
+    self.specialArray = [[NSMutableArray alloc] initWithCapacity:kNumSpecials];
+    
+    for (int i=0;i<kNumSpecials; i++) {
+        SKSpriteNode *special = [SKSpriteNode spriteNodeWithImageNamed:@"bar"];
+        
+        special.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:special.size];
+        special.physicsBody.dynamic = NO;
+        special.physicsBody.categoryBitMask = COLLISION_CATEGORY_SPECIAL;
+        special.hidden = YES;
+        special.name = @"Bar";
+        special.zPosition = 10;
+        [self.specialArray addObject:special];
+        [self addChild:special];
+    }
 }
 
 -(void) addNPCs
@@ -165,7 +194,7 @@
         obstacle.physicsBody.categoryBitMask = COLLISION_CATEGORY_OBSTACLE;
         obstacle.hidden = YES;
         obstacle.name = @"Tree";
-        obstacle.zPosition = 10;
+        obstacle.zPosition = 15;
         [self.obstacleArray addObject:obstacle];
         [self addChild:obstacle];
     }
@@ -180,7 +209,7 @@
         obstacle.physicsBody.categoryBitMask = COLLISION_CATEGORY_OBSTACLE;
         obstacle.hidden = YES;
         obstacle.name = @"Pole";
-        obstacle.zPosition = 10;
+        obstacle.zPosition = 15;
         [self.obstacleArray addObject:obstacle];
         [self addChild:obstacle];
     }
@@ -208,6 +237,7 @@
     food.physicsBody.categoryBitMask = COLLISION_CATEGORY_FOOD;
     food.physicsBody.contactTestBitMask = COLLISION_CATEGORY_OBSTACLE;
     food.physicsBody.collisionBitMask = 0;
+    food.zPosition = 12;
     food.physicsBody.usesPreciseCollisionDetection = YES;
     food.hidden = YES;
     food.name = @"Food";
@@ -237,7 +267,12 @@
         CGPoint touch = [[touches anyObject] locationInView:self.view];
         CGFloat xChanged = self.tappedXOrigin-touch.x;
         CGPoint newLocation = CGPointMake(self.monsterXOrigin-xChanged, self.monster.position.y);
-        SKAction *moveAction = [SKAction moveTo:newLocation duration:.1f];
+        if (newLocation.x > CGRectGetWidth(self.frame)-self.monster.size.width/2) {
+            newLocation.x = CGRectGetWidth(self.frame)-self.monster.size.width/2;
+        } else if (newLocation.x < self.monster.size.width/2) {
+            newLocation.x = self.monster.size.width/2;
+        }
+        SKAction *moveAction = [SKAction moveToX:newLocation.x duration:.1f];
         
         [self.monster runAction:moveAction];
     }
@@ -274,9 +309,39 @@
                 self.numOfFoodEaten++;
                 if (self.numOfFoodEaten % 10 == 0) {
                     self.lives++;
+                    
+                    
+                    SKAction *zoomOut = [SKAction scaleBy:1.5 duration:.4f];
+                    SKAction *zoomIn = [SKAction scaleBy:.75f duration:.4f];
+                    SKAction *zoom = [SKAction sequence:@[zoomOut,zoomIn]];
+                    
+                    [self.livesLabel runAction:zoom];
                     self.livesLabel.text = [NSString stringWithFormat:@"Lives: %d",(int)self.lives];
                 }
                 [self gobbleSound];
+            } else if ([[nodeB name] isEqualToString:@"Bar"]) {
+                SKAction *jumpUp = [SKAction moveToY:MonsterYLevel+100 duration:.6f];
+                SKAction *scaleUp = [SKAction scaleBy:2.f duration:.6f];
+                SKAction *jumpAndRotateUp = [SKAction group:@[jumpUp,scaleUp]];
+                
+                SKAction *jumpDown = [SKAction moveToY:MonsterYLevel duration:.6f];
+                SKAction *scaleDown = [SKAction scaleBy:.5f duration:.6f];
+                SKAction *jumpAndRotateDown = [SKAction group:@[jumpDown,scaleDown]];
+                
+                SKAction *upZIndex1 = [SKAction runBlock:^{
+                    self.monster.zPosition = 500;
+                    self.monster.physicsBody.contactTestBitMask = COLLISION_CATEGORY_MONSTER;
+                }];
+                
+                SKAction *upZIndex2 = [SKAction runBlock:^{
+                    self.monster.physicsBody.contactTestBitMask = COLLISION_CATEGORY_FOOD | COLLISION_CATEGORY_OBSTACLE | COLLISION_CATEGORY_SPECIAL;
+                    self.monster.zPosition = 10;
+                }];
+                
+                SKAction *jump = [SKAction sequence:@[upZIndex1, jumpAndRotateUp,jumpAndRotateDown, upZIndex2]];
+                
+                [self.monster runAction:jump];
+                    
             } else {
                 if (self.lives == 0) {
                     [self endGame];
@@ -285,18 +350,22 @@
                     self.livesLabel.text = [NSString stringWithFormat:@"Lives: %d",(int)self.lives];
                     
                     self.monsterIsRecooperating = YES;
+                    SKAction *removeCollisions = [SKAction runBlock:^{
+                        self.monster.physicsBody.contactTestBitMask = COLLISION_CATEGORY_MONSTER;
+                    }];
+                    
                     SKAction *blinkActionOff = [SKAction scaleXTo:-1.f duration:.2f];
                     
                     SKAction *blinkActionOn = [SKAction scaleXTo:1.f duration:.2f];
                     
                     SKAction *doneRecooperating = [SKAction runBlock:^{
                         self.monsterIsRecooperating = NO;
+                        self.monster.physicsBody.contactTestBitMask = COLLISION_CATEGORY_FOOD | COLLISION_CATEGORY_OBSTACLE | COLLISION_CATEGORY_SPECIAL;
                     }];
                     
-                    CGPoint monsterOrigin = CGPointMake(150, MonsterYLevel);
-                    SKAction *moveMonsterToCenter = [SKAction moveTo:monsterOrigin duration:.4f];
+                    SKAction *moveMonsterToCenter = [SKAction moveToX:MonsterXLevel duration:.4f];
                     
-                    SKAction *blinkMonster = [SKAction sequence:@[moveMonsterToCenter,blinkActionOff,blinkActionOn,blinkActionOff,blinkActionOn,blinkActionOff,blinkActionOn,doneRecooperating]];
+                    SKAction *blinkMonster = [SKAction sequence:@[removeCollisions, moveMonsterToCenter,blinkActionOff,blinkActionOn,blinkActionOff,blinkActionOn,blinkActionOff,blinkActionOn,doneRecooperating]];
                     [self.monster runAction:blinkMonster];
                 }
             }
@@ -312,7 +381,6 @@
     
     self.isDead = YES;
     self.monster = nil;
-    [self.monsterMove invalidate];
     
     GameOverScreen* gameOverScene = [[GameOverScreen alloc] initWithSize:self.size];
     gameOverScene.numSkiersEaten = self.numOfFoodEaten;
@@ -366,6 +434,34 @@
         [obstacle runAction:moveObstacleThenHide];
     }
     
+    if (thisTime > self.nextSpecialSpawn) {
+        float randomSecond = [self randomValueBetween:3.f andValue:15.0f]/(self.speedMultiplier);
+        self.nextSpecialSpawn = randomSecond + thisTime;
+        float randomXPosition = [self randomValueBetween:0.0f andValue:CGRectGetHeight(self.frame)];
+        float specialDuration = 8.f/self.speedMultiplier;
+        
+        
+        
+        SKSpriteNode *special = self.specialArray[self.nextSpecial];
+        self.nextSpecial++;
+        if (self.nextSpecial >= self.specialArray.count) {
+            self.nextSpecial = 0;
+        }
+        
+        special.position = CGPointMake(randomXPosition, CGRectGetMinY(self.frame));
+        special.hidden = NO;
+        
+        CGPoint location = CGPointMake(randomXPosition,  CGRectGetHeight(self.frame));
+        
+        SKAction *moveAction = [SKAction moveTo:location duration:specialDuration];
+        
+        SKAction *hideSpecial = [SKAction runBlock:^{
+            special.hidden = YES;
+        }];
+        
+        SKAction *moveSpecialThenHide = [SKAction sequence:@[moveAction,hideSpecial]];
+        [special runAction:moveSpecialThenHide];
+    }
     
     if (thisTime > self.nextFoodSpawn) {
         float randomSecond = [self randomValueBetween:1.0f andValue:5.0f]/self.speedMultiplier;
@@ -389,6 +485,10 @@
         //next food position
         
         float nextRandomXPosition = [self randomValueBetween:0.0f andValue:CGRectGetWidth(self.frame)];
+        if ( nextRandomXPosition < randomXPosition ) {
+            SKAction *switchOrientation = [SKAction scaleXTo:-1.f duration:.1f];
+            [food runAction:switchOrientation];
+        }
         CGPoint location = CGPointMake(nextRandomXPosition,  CGRectGetHeight(self.frame));
         
         
