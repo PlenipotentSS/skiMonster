@@ -18,8 +18,8 @@
 -(void)viewWillLayoutSubviews
 {
     SKView *skyMonsterView = (SKView *)self.view;
-    skyMonsterView.showsFPS = YES;
-    skyMonsterView.showsNodeCount = YES;
+    //skyMonsterView.showsFPS = YES;
+    //skyMonsterView.showsNodeCount = YES;
     
     SKScene *scene = [SkiMonsterScene sceneWithSize:skyMonsterView.bounds.size];
     scene.backgroundColor = [UIColor whiteColor];

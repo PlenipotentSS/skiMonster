@@ -25,6 +25,12 @@
 		D25C283018B349B300C3AD39 /* SkiMonsterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D25C282F18B349B300C3AD39 /* SkiMonsterTests.m */; };
 		D25C283A18B34A0800C3AD39 /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D25C283918B34A0800C3AD39 /* SpriteKit.framework */; };
 		D25C283D18B34A3600C3AD39 /* SkiMonsterScene.m in Sources */ = {isa = PBXBuildFile; fileRef = D25C283C18B34A3600C3AD39 /* SkiMonsterScene.m */; };
+		D2779B3718B437220062D34C /* YMCPhysicsDebugger.m in Sources */ = {isa = PBXBuildFile; fileRef = D2779B2E18B437220062D34C /* YMCPhysicsDebugger.m */; };
+		D2779B3818B437220062D34C /* YMCPhysicsDebugProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = D2779B3018B437220062D34C /* YMCPhysicsDebugProperties.m */; };
+		D2779B3918B437220062D34C /* YMCSKNode+PhysicsDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = D2779B3218B437220062D34C /* YMCSKNode+PhysicsDebug.m */; };
+		D2779B3A18B437220062D34C /* YMCSKPhysicsBody+Swizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = D2779B3418B437220062D34C /* YMCSKPhysicsBody+Swizzle.m */; };
+		D2779B3B18B437220062D34C /* YMCSwizzler.m in Sources */ = {isa = PBXBuildFile; fileRef = D2779B3618B437220062D34C /* YMCSwizzler.m */; };
+		D2779B3F18B4499F0062D34C /* GameOverScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = D2779B3E18B4499F0062D34C /* GameOverScreen.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +68,18 @@
 		D25C283918B34A0800C3AD39 /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
 		D25C283B18B34A3600C3AD39 /* SkiMonsterScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkiMonsterScene.h; sourceTree = "<group>"; };
 		D25C283C18B34A3600C3AD39 /* SkiMonsterScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkiMonsterScene.m; sourceTree = "<group>"; };
+		D2779B2D18B437220062D34C /* YMCPhysicsDebugger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMCPhysicsDebugger.h; sourceTree = "<group>"; };
+		D2779B2E18B437220062D34C /* YMCPhysicsDebugger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMCPhysicsDebugger.m; sourceTree = "<group>"; };
+		D2779B2F18B437220062D34C /* YMCPhysicsDebugProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMCPhysicsDebugProperties.h; sourceTree = "<group>"; };
+		D2779B3018B437220062D34C /* YMCPhysicsDebugProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMCPhysicsDebugProperties.m; sourceTree = "<group>"; };
+		D2779B3118B437220062D34C /* YMCSKNode+PhysicsDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YMCSKNode+PhysicsDebug.h"; sourceTree = "<group>"; };
+		D2779B3218B437220062D34C /* YMCSKNode+PhysicsDebug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "YMCSKNode+PhysicsDebug.m"; sourceTree = "<group>"; };
+		D2779B3318B437220062D34C /* YMCSKPhysicsBody+Swizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YMCSKPhysicsBody+Swizzle.h"; sourceTree = "<group>"; };
+		D2779B3418B437220062D34C /* YMCSKPhysicsBody+Swizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "YMCSKPhysicsBody+Swizzle.m"; sourceTree = "<group>"; };
+		D2779B3518B437220062D34C /* YMCSwizzler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMCSwizzler.h; sourceTree = "<group>"; };
+		D2779B3618B437220062D34C /* YMCSwizzler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMCSwizzler.m; sourceTree = "<group>"; };
+		D2779B3D18B4499F0062D34C /* GameOverScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOverScreen.h; sourceTree = "<group>"; };
+		D2779B3E18B4499F0062D34C /* GameOverScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOverScreen.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,8 +150,11 @@
 				D25C281A18B349B200C3AD39 /* ViewController.m */,
 				D25C283B18B34A3600C3AD39 /* SkiMonsterScene.h */,
 				D25C283C18B34A3600C3AD39 /* SkiMonsterScene.m */,
+				D2779B3D18B4499F0062D34C /* GameOverScreen.h */,
+				D2779B3E18B4499F0062D34C /* GameOverScreen.m */,
 				D22AE77318B3D4B300F2B4B5 /* gobble.wav */,
 				D25C281C18B349B200C3AD39 /* Images.xcassets */,
+				D2779B3C18B437280062D34C /* PhysicsDebugger */,
 				D25C280B18B349B200C3AD39 /* Supporting Files */,
 			);
 			path = SkiMonster;
@@ -166,6 +187,23 @@
 				D25C282C18B349B300C3AD39 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D2779B3C18B437280062D34C /* PhysicsDebugger */ = {
+			isa = PBXGroup;
+			children = (
+				D2779B2D18B437220062D34C /* YMCPhysicsDebugger.h */,
+				D2779B2E18B437220062D34C /* YMCPhysicsDebugger.m */,
+				D2779B2F18B437220062D34C /* YMCPhysicsDebugProperties.h */,
+				D2779B3018B437220062D34C /* YMCPhysicsDebugProperties.m */,
+				D2779B3118B437220062D34C /* YMCSKNode+PhysicsDebug.h */,
+				D2779B3218B437220062D34C /* YMCSKNode+PhysicsDebug.m */,
+				D2779B3318B437220062D34C /* YMCSKPhysicsBody+Swizzle.h */,
+				D2779B3418B437220062D34C /* YMCSKPhysicsBody+Swizzle.m */,
+				D2779B3518B437220062D34C /* YMCSwizzler.h */,
+				D2779B3618B437220062D34C /* YMCSwizzler.m */,
+			);
+			name = PhysicsDebugger;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -269,8 +307,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2779B3A18B437220062D34C /* YMCSKPhysicsBody+Swizzle.m in Sources */,
 				D25C281B18B349B200C3AD39 /* ViewController.m in Sources */,
+				D2779B3718B437220062D34C /* YMCPhysicsDebugger.m in Sources */,
+				D2779B3B18B437220062D34C /* YMCSwizzler.m in Sources */,
+				D2779B3818B437220062D34C /* YMCPhysicsDebugProperties.m in Sources */,
+				D2779B3F18B4499F0062D34C /* GameOverScreen.m in Sources */,
 				D25C283D18B34A3600C3AD39 /* SkiMonsterScene.m in Sources */,
+				D2779B3918B437220062D34C /* YMCSKNode+PhysicsDebug.m in Sources */,
 				D25C281518B349B200C3AD39 /* AppDelegate.m in Sources */,
 				D25C281118B349B200C3AD39 /* main.m in Sources */,
 			);
