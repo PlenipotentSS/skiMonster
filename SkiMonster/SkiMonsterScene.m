@@ -14,7 +14,7 @@
 #import "SkiMonsterScene.h"
 #import "YMCPhysicsDebugger.h"
 #import "GameOverScreen.h"
-
+#import "MonsterPlayer.h"
 
 @interface SkiMonsterScene() <SKPhysicsContactDelegate>
 
@@ -35,13 +35,17 @@
 @property (nonatomic) NSMutableArray *specialArray;
 
 //main character
-@property (nonatomic) SKSpriteNode *monster;
+@property (nonatomic) MonsterPlayer *monster;
 
 @property (nonatomic) BOOL playingSound;
 
 @property (nonatomic) SKLabelNode *loseLabel;
 
 @property (nonatomic) SKLabelNode *foodEatenLabel;
+
+@property (nonatomic) SKLabelNode *jumpScoreLabel;
+
+@property (nonatomic) NSInteger jumpScore;
 
 @property (nonatomic) SKLabelNode *livesLabel;
 
@@ -82,42 +86,14 @@
         self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
         self.physicsWorld.contactDelegate = self;
         
+        //debugger
         [YMCPhysicsDebugger init];
         
         [self bringMonsterToScene];
         [self addNPCs];
         [self addSpecials];
-        
-        self.loseLabel = [[SKLabelNode alloc] initWithFontNamed:@"HelveticaNueue"];
-        self.loseLabel.fontSize = 50;
-        self.loseLabel.fontColor = [UIColor blackColor];
-        self.loseLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
-        
-        [self addChild:self.loseLabel];
-        self.loseLabel.hidden = YES;
-        
-        self.loseLabel = [[SKLabelNode alloc] initWithFontNamed:@"HelveticaNueue"];
-        self.loseLabel.fontSize = 50;
-        self.loseLabel.fontColor = [UIColor blackColor];
-        self.loseLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
-        self.loseLabel.text = @"You Lose!";
-        
-        [self addChild:self.loseLabel];
-        self.loseLabel.hidden = YES;
-        
-        self.foodEatenLabel = [[SKLabelNode alloc] initWithFontNamed:@"HelveticaNueue"];
-        self.foodEatenLabel.fontSize = 16;
-        self.foodEatenLabel.fontColor = [UIColor blackColor];
-        self.foodEatenLabel.position = CGPointMake(CGRectGetWidth(self.frame)-80, CGRectGetHeight(self.frame)-40);
-        self.foodEatenLabel.text = @"Skiers Eaten: 0";
-        [self addChild:self.foodEatenLabel];
-        
-        self.livesLabel = [[SKLabelNode alloc] initWithFontNamed:@"HelveticaNueue"];
-        self.livesLabel.fontSize = 16;
-        self.livesLabel.fontColor = [UIColor blackColor];
-        self.livesLabel.position = CGPointMake(50, CGRectGetHeight(self.frame)-40);
-        self.livesLabel.text = @"Lives: 1";
-        [self addChild:self.livesLabel];
+        [self setupLabels];
+
         
         //[self drawPhysicsBodies];
     }
@@ -132,27 +108,69 @@
 -(void)setNumOfFoodEaten:(NSInteger)numOfFoodEaten
 {
     _numOfFoodEaten = numOfFoodEaten;
-    self.foodEatenLabel.text = [NSString stringWithFormat:@"Skiers Eaten: %d",(int)numOfFoodEaten];
+    self.foodEatenLabel.text = [NSString stringWithFormat:@"Skiers Score: %d",(int)numOfFoodEaten];
 }
 
+-(void)setJumpScore:(NSInteger )jumpScore
+{
+    _jumpScore = jumpScore;
+    self.jumpScoreLabel.text = [NSString stringWithFormat:@"Jumps Score: %d",(int)jumpScore];
+}
+
+#pragma mark - setup labels
+-(void) setupLabels
+{
+    self.loseLabel = [[SKLabelNode alloc] initWithFontNamed:@"HelveticaNueue"];
+    self.loseLabel.fontSize = 50;
+    self.loseLabel.fontColor = [UIColor blackColor];
+    self.loseLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+    
+    [self addChild:self.loseLabel];
+    self.loseLabel.hidden = YES;
+    
+    self.loseLabel = [[SKLabelNode alloc] initWithFontNamed:@"HelveticaNueue"];
+    self.loseLabel.fontSize = 50;
+    self.loseLabel.fontColor = [UIColor blackColor];
+    self.loseLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+    self.loseLabel.text = @"You Lose!";
+    
+    [self addChild:self.loseLabel];
+    self.loseLabel.hidden = YES;
+    
+    self.foodEatenLabel = [[SKLabelNode alloc] initWithFontNamed:@"HelveticaNueue"];
+    self.foodEatenLabel.fontSize = 16;
+    self.foodEatenLabel.fontColor = [UIColor blackColor];
+    self.foodEatenLabel.position = CGPointMake(CGRectGetWidth(self.frame)-80, CGRectGetHeight(self.frame)-40);
+    self.foodEatenLabel.text = @"Skiers Score: 0";
+    [self addChild:self.foodEatenLabel];
+    
+    self.jumpScoreLabel = [[SKLabelNode alloc] initWithFontNamed:@"HelveticaNueue"];
+    self.jumpScoreLabel.fontSize = 16;
+    self.jumpScoreLabel.fontColor = [UIColor blackColor];
+    self.jumpScoreLabel.position = CGPointMake(CGRectGetWidth(self.frame)-80, CGRectGetHeight(self.frame)-60);
+    self.jumpScoreLabel.text = @"Jumps Score: 0";
+    [self addChild:self.jumpScoreLabel];
+    
+    self.livesLabel = [[SKLabelNode alloc] initWithFontNamed:@"HelveticaNueue"];
+    self.livesLabel.fontSize = 16;
+    self.livesLabel.fontColor = [UIColor blackColor];
+    self.livesLabel.position = CGPointMake(50, CGRectGetHeight(self.frame)-40);
+    self.livesLabel.text = @"Lives: 1";
+    [self addChild:self.livesLabel];
+}
+
+#pragma mark - setting up players
 -(void) bringMonsterToScene
 {
     self.isDead = NO;
     self.numOfFoodEaten = 0;
+    self.jumpScore = 0;
     self.lives = 1;
-    self.monster = [SKSpriteNode spriteNodeWithImageNamed:@"abom_h"];
+    self.monster = [MonsterPlayer spriteNodeWithImageNamed:@"abom_h"];
     self.monster.position = CGPointMake(MonsterXLevel, MonsterYLevel);
-    
-    CGSize monsterSize = self.monster.size;
-    monsterSize = CGSizeMake(monsterSize.width*.4, monsterSize.width*.4);
-    self.monster.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:monsterSize];
-    self.monster.physicsBody.dynamic = YES;
-    self.monster.physicsBody.allowsRotation = NO;
-    self.monster.physicsBody.affectedByGravity = NO;
+    self.monster.physicsBody.collisionBitMask = 0x0;
     self.monster.physicsBody.categoryBitMask = COLLISION_CATEGORY_MONSTER;
     self.monster.physicsBody.contactTestBitMask = COLLISION_CATEGORY_FOOD | COLLISION_CATEGORY_OBSTACLE | COLLISION_CATEGORY_SPECIAL;
-    self.monster.zPosition = 5;
-    self.monster.name = @"Monster";
     [self addChild:self.monster];
 }
 
@@ -167,6 +185,8 @@
         special.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:special.size];
         special.physicsBody.dynamic = NO;
         special.physicsBody.categoryBitMask = COLLISION_CATEGORY_SPECIAL;
+        self.monster.physicsBody.collisionBitMask = COLLISION_CATEGORY_FOOD | COLLISION_CATEGORY_OBSTACLE;
+        special.physicsBody.contactTestBitMask = COLLISION_CATEGORY_FOOD;
         special.hidden = YES;
         special.name = @"Bar";
         special.zPosition = 10;
@@ -192,6 +212,8 @@
         obstacle.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:obstacleSize];
         obstacle.physicsBody.dynamic = NO;
         obstacle.physicsBody.categoryBitMask = COLLISION_CATEGORY_OBSTACLE;
+        obstacle.physicsBody.collisionBitMask = COLLISION_CATEGORY_FOOD | COLLISION_CATEGORY_OBSTACLE | COLLISION_CATEGORY_SPECIAL;
+        obstacle.physicsBody.contactTestBitMask = COLLISION_CATEGORY_OBSTACLE;
         obstacle.hidden = YES;
         obstacle.name = @"Tree";
         obstacle.zPosition = 15;
@@ -207,6 +229,8 @@
         obstacle.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:obstacleSize];
         obstacle.physicsBody.dynamic = NO;
         obstacle.physicsBody.categoryBitMask = COLLISION_CATEGORY_OBSTACLE;
+        obstacle.physicsBody.collisionBitMask = COLLISION_CATEGORY_FOOD | COLLISION_CATEGORY_OBSTACLE | COLLISION_CATEGORY_SPECIAL;
+        obstacle.physicsBody.contactTestBitMask = COLLISION_CATEGORY_OBSTACLE;
         obstacle.hidden = YES;
         obstacle.name = @"Pole";
         obstacle.zPosition = 15;
@@ -235,6 +259,7 @@
     food.physicsBody.allowsRotation = NO;
     self.monster.physicsBody.affectedByGravity = NO;
     food.physicsBody.categoryBitMask = COLLISION_CATEGORY_FOOD;
+    food.physicsBody.collisionBitMask = COLLISION_CATEGORY_FOOD | COLLISION_CATEGORY_OBSTACLE | COLLISION_CATEGORY_SPECIAL;
     food.physicsBody.contactTestBitMask = COLLISION_CATEGORY_OBSTACLE;
     food.physicsBody.collisionBitMask = 0;
     food.zPosition = 12;
@@ -254,6 +279,7 @@
     }
 }
 
+#pragma mark - Touches methods
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     CGPoint touch = [[touches anyObject] locationInView:self.view];
@@ -306,9 +332,9 @@
                 [self.foodArray removeObject:nodeB];
                 [self createFood];
                 
-                self.numOfFoodEaten++;
-                if (self.numOfFoodEaten % 10 == 0) {
-                    self.lives++;
+                self.numOfFoodEaten += 100;
+                if (self.numOfFoodEaten % 1000 == 0) {
+                    self.lives += 1;
                     
                     
                     SKAction *zoomOut = [SKAction scaleBy:1.5 duration:.4f];
@@ -320,6 +346,8 @@
                 }
                 [self gobbleSound];
             } else if ([[nodeB name] isEqualToString:@"Bar"]) {
+                self.jumpScore += 50;
+                
                 SKAction *jumpUp = [SKAction moveToY:MonsterYLevel+100 duration:.6f];
                 SKAction *scaleUp = [SKAction scaleBy:2.f duration:.6f];
                 SKAction *jumpAndRotateUp = [SKAction group:@[jumpUp,scaleUp]];
@@ -330,11 +358,9 @@
                 
                 SKAction *upZIndex1 = [SKAction runBlock:^{
                     self.monster.zPosition = 500;
-                    self.monster.physicsBody.contactTestBitMask = COLLISION_CATEGORY_MONSTER;
                 }];
                 
                 SKAction *upZIndex2 = [SKAction runBlock:^{
-                    self.monster.physicsBody.contactTestBitMask = COLLISION_CATEGORY_FOOD | COLLISION_CATEGORY_OBSTACLE | COLLISION_CATEGORY_SPECIAL;
                     self.monster.zPosition = 10;
                 }];
                 
@@ -350,22 +376,18 @@
                     self.livesLabel.text = [NSString stringWithFormat:@"Lives: %d",(int)self.lives];
                     
                     self.monsterIsRecooperating = YES;
-                    SKAction *removeCollisions = [SKAction runBlock:^{
-                        self.monster.physicsBody.contactTestBitMask = COLLISION_CATEGORY_MONSTER;
-                    }];
                     
-                    SKAction *blinkActionOff = [SKAction scaleXTo:-1.f duration:.2f];
+                    SKAction *blinkActionOff = [SKAction fadeOutWithDuration:.3f];
                     
-                    SKAction *blinkActionOn = [SKAction scaleXTo:1.f duration:.2f];
+                    SKAction *blinkActionOn = [SKAction fadeInWithDuration:.3f];
                     
                     SKAction *doneRecooperating = [SKAction runBlock:^{
                         self.monsterIsRecooperating = NO;
-                        self.monster.physicsBody.contactTestBitMask = COLLISION_CATEGORY_FOOD | COLLISION_CATEGORY_OBSTACLE | COLLISION_CATEGORY_SPECIAL;
                     }];
                     
                     SKAction *moveMonsterToCenter = [SKAction moveToX:MonsterXLevel duration:.4f];
                     
-                    SKAction *blinkMonster = [SKAction sequence:@[removeCollisions, moveMonsterToCenter,blinkActionOff,blinkActionOn,blinkActionOff,blinkActionOn,blinkActionOff,blinkActionOn,doneRecooperating]];
+                    SKAction *blinkMonster = [SKAction sequence:@[blinkActionOff,blinkActionOn,blinkActionOff,blinkActionOn,blinkActionOff,blinkActionOn,moveMonsterToCenter,doneRecooperating]];
                     [self.monster runAction:blinkMonster];
                 }
             }
@@ -383,7 +405,7 @@
     self.monster = nil;
     
     GameOverScreen* gameOverScene = [[GameOverScreen alloc] initWithSize:self.size];
-    gameOverScene.numSkiersEaten = self.numOfFoodEaten;
+    gameOverScene.numSkiersEaten = self.numOfFoodEaten+self.jumpScore;
     [self.view presentScene:gameOverScene transition:[SKTransition doorsOpenHorizontalWithDuration:1.0]];
 }
 

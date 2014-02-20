@@ -31,6 +31,8 @@
 		D2779B3A18B437220062D34C /* YMCSKPhysicsBody+Swizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = D2779B3418B437220062D34C /* YMCSKPhysicsBody+Swizzle.m */; };
 		D2779B3B18B437220062D34C /* YMCSwizzler.m in Sources */ = {isa = PBXBuildFile; fileRef = D2779B3618B437220062D34C /* YMCSwizzler.m */; };
 		D2779B3F18B4499F0062D34C /* GameOverScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = D2779B3E18B4499F0062D34C /* GameOverScreen.m */; };
+		D2779B4218B527470062D34C /* MonsterPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D2779B4118B527470062D34C /* MonsterPlayer.m */; };
+		D2779B4618B527F70062D34C /* SkierPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D2779B4518B527F70062D34C /* SkierPlayer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +82,10 @@
 		D2779B3618B437220062D34C /* YMCSwizzler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMCSwizzler.m; sourceTree = "<group>"; };
 		D2779B3D18B4499F0062D34C /* GameOverScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOverScreen.h; sourceTree = "<group>"; };
 		D2779B3E18B4499F0062D34C /* GameOverScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOverScreen.m; sourceTree = "<group>"; };
+		D2779B4018B527460062D34C /* MonsterPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonsterPlayer.h; sourceTree = "<group>"; };
+		D2779B4118B527470062D34C /* MonsterPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonsterPlayer.m; sourceTree = "<group>"; };
+		D2779B4418B527F70062D34C /* SkierPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkierPlayer.h; sourceTree = "<group>"; };
+		D2779B4518B527F70062D34C /* SkierPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkierPlayer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +158,7 @@
 				D25C283C18B34A3600C3AD39 /* SkiMonsterScene.m */,
 				D2779B3D18B4499F0062D34C /* GameOverScreen.h */,
 				D2779B3E18B4499F0062D34C /* GameOverScreen.m */,
+				D2779B4318B527530062D34C /* Player Models */,
 				D22AE77318B3D4B300F2B4B5 /* gobble.wav */,
 				D25C281C18B349B200C3AD39 /* Images.xcassets */,
 				D2779B3C18B437280062D34C /* PhysicsDebugger */,
@@ -204,6 +211,17 @@
 				D2779B3618B437220062D34C /* YMCSwizzler.m */,
 			);
 			name = PhysicsDebugger;
+			sourceTree = "<group>";
+		};
+		D2779B4318B527530062D34C /* Player Models */ = {
+			isa = PBXGroup;
+			children = (
+				D2779B4018B527460062D34C /* MonsterPlayer.h */,
+				D2779B4118B527470062D34C /* MonsterPlayer.m */,
+				D2779B4418B527F70062D34C /* SkierPlayer.h */,
+				D2779B4518B527F70062D34C /* SkierPlayer.m */,
+			);
+			name = "Player Models";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -312,7 +330,9 @@
 				D2779B3718B437220062D34C /* YMCPhysicsDebugger.m in Sources */,
 				D2779B3B18B437220062D34C /* YMCSwizzler.m in Sources */,
 				D2779B3818B437220062D34C /* YMCPhysicsDebugProperties.m in Sources */,
+				D2779B4218B527470062D34C /* MonsterPlayer.m in Sources */,
 				D2779B3F18B4499F0062D34C /* GameOverScreen.m in Sources */,
+				D2779B4618B527F70062D34C /* SkierPlayer.m in Sources */,
 				D25C283D18B34A3600C3AD39 /* SkiMonsterScene.m in Sources */,
 				D2779B3918B437220062D34C /* YMCSKNode+PhysicsDebug.m in Sources */,
 				D25C281518B349B200C3AD39 /* AppDelegate.m in Sources */,

@@ -41,7 +41,7 @@
 - (void)createContent
 {
     SKLabelNode* highScoreLabel = [SKLabelNode labelNodeWithFontNamed:@"Courier"];
-    highScoreLabel.fontSize = 25;
+    highScoreLabel.fontSize = 22;
     highScoreLabel.fontColor = [SKColor whiteColor];
     highScoreLabel.text = [NSString stringWithFormat:@"High Score: %d",(int)self.highScore];
     highScoreLabel.position = CGPointMake(self.size.width/2, self.size.height-100);
