@@ -65,7 +65,7 @@
     SKLabelNode* SkiersEatenTitleLabel = [SKLabelNode labelNodeWithFontNamed:@"Courier"];
     SkiersEatenTitleLabel.fontSize = 40;
     SkiersEatenTitleLabel.fontColor = [SKColor whiteColor];
-    SkiersEatenTitleLabel.text = [NSString stringWithFormat:@"Skiers Eaten"];
+    SkiersEatenTitleLabel.text = [NSString stringWithFormat:@"Monster Score"];
     SkiersEatenTitleLabel.position = CGPointMake(self.size.width/2, numberSkiersLabel.frame.origin.y - numberSkiersLabel.frame.size.height - 20);
     [self addChild:SkiersEatenTitleLabel];
     
